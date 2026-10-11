@@ -1,24 +1,17 @@
-# Thực hành MySQL Trigger - Classicmodels
+# QuickFeed Index Optimization
 
-Bài tập thực hành về cách tạo, kiểm thử và sửa đổi Trigger trong MySQL trên cơ sở dữ liệu mẫu `classicmodels`.
+Bài thực hành phân tích và tối ưu chỉ mục MySQL cho bảng `quickfeed_db.Posts`.
 
-## Mục tiêu bài học
+## Tệp nộp bài
 
-- Hiểu cú pháp xây dựng Trigger với các sự kiện `BEFORE INSERT` và `AFTER INSERT`.
-- Biết sử dụng `NEW` để kiểm tra dữ liệu trước khi thêm bản ghi.
-- Biết ghi nhận sự kiện phát sinh vào bảng log bằng Trigger.
-- Biết sửa Trigger trong MySQL bằng cách xóa và tạo lại Trigger.
+- `quickfeed_index_optimization.sql`: đo `DATA_LENGTH`/`INDEX_LENGTH` trước và sau tối ưu, drop đúng ba index dư thừa và lưu log đối chiếu.
+- `storage_performance_report.md`: phân tích cardinality, storage overhead và đánh đổi Read/Write.
+- `ai_prompt_log.md`: nhật ký dùng AI để tìm hiểu `information_schema`, cardinality, B-Tree và FULLTEXT.
 
-## Tiến trình thực thi trong file `queries.sql`
+## Cách chạy
 
-1. **Khởi tạo môi trường**: Chạy `index.sql` trước để tạo và nạp dữ liệu cho database `classicmodels`.
-2. **Tạo `validate_customer_credit_limit`**: Trigger `BEFORE INSERT` đặt hạn mức mặc định là `0.00` khi giá trị bị bỏ trống và từ chối hạn mức âm.
-3. **Tạo `log_new_order`**: Trigger `AFTER INSERT` trên bảng `orders` ghi số đơn hàng và khách hàng vào bảng `order_audit`.
-4. **Gọi kiểm thử Trigger**: Chèn dữ liệu mẫu rồi dùng `SELECT` để kiểm tra kết quả Trigger.
-5. **Sửa Trigger**: Xóa và tạo lại `log_new_order` để thay đổi giá trị `action_name` từ `INSERT` thành `INSERTED_ORDER`, sau đó kiểm tra lại.
+1. Chạy Legacy SQL Script trong đề bài để tạo `quickfeed_db.Posts` và năm index ban đầu.
+2. Chạy toàn bộ `quickfeed_index_optimization.sql` bằng MySQL Workbench hoặc MySQL CLI.
+3. Đọc kết quả `BEFORE`/`AFTER` và truy vấn đối chiếu cuối script.
 
-## Hướng dẫn chạy bài thực hành
-
-1. Khởi động công cụ điều khiển cơ sở dữ liệu (**MySQL Workbench** hoặc dòng lệnh).
-2. Chạy `index.sql`, sau đó mở tệp tin `queries.sql`.
-3. Chạy toàn bộ mã lệnh bằng tổ hợp phím `Ctrl + Shift + Enter`.
+Script giữ lại `idx_user_id` và `idx_created_at`, đồng thời loại bỏ `idx_content`, `idx_post_type` và `idx_is_visible`.
