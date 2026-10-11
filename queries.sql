@@ -1,47 +1,36 @@
 USE classicmodels;
 
--- Truy van ban dau
-SELECT *
-FROM customers
-WHERE customerName = 'Land of Toys Inc.';
+DELIMITER //
 
--- Phan tich truoc khi tao chi muc
-EXPLAIN
-SELECT *
-FROM customers
-WHERE customerName = 'Land of Toys Inc.';
+CREATE PROCEDURE findAllCustomers()
+BEGIN
+    SELECT * FROM customers;
+END //
 
--- Tao chi muc don cho customerName
-ALTER TABLE customers
-	ADD INDEX idx_customerName (customerName);
+DELIMITER ;
 
--- Phan tich sau khi tao chi muc don
-EXPLAIN
-SELECT *
-FROM customers
-WHERE customerName = 'Land of Toys Inc.';
+-- CALL findAllCustomers();
 
--- Tao chi muc kep cho ho va ten
-ALTER TABLE customers
-	ADD INDEX idx_full_name (contactFirstName, contactLastName);
+DELIMITER //
 
--- Phan tich truy van su dung chi muc kep
-EXPLAIN
-SELECT *
-FROM customers
-WHERE contactFirstName = 'Jean'
-	AND contactLastName = 'King';
+DROP PROCEDURE IF EXISTS `findAllCustomers` //
 
--- Phan tich truy van OR voi cot trong chi muc kep
-EXPLAIN
-SELECT *
-FROM customers
-WHERE contactFirstName = 'Jean'
-	 OR contactLastName = 'King';
+CREATE PROCEDURE findAllCustomers()
+BEGIN
+    SELECT * FROM customers WHERE customerNumber = 175;
+END //
 
--- Xoa cac chi muc da tao
-ALTER TABLE customers
-	DROP INDEX idx_full_name;
+DELIMITER ;
 
-ALTER TABLE customers
-	DROP INDEX idx_customerName;
+-- CALL findAllCustomers();
+
+DELIMITER //
+
+DROP PROCEDURE IF EXISTS `getCustomersByCity` //
+
+CREATE PROCEDURE getCustomersByCity(IN cityName VARCHAR(50))
+BEGIN
+    SELECT * FROM customers WHERE city = cityName;
+END //
+
+DELIMITER ;
