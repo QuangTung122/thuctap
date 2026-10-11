@@ -1,51 +1,16 @@
-# jwbd-2023-using-index
+# Thực hành MySQL Stored Procedure - Classicmodels
 
-CSDL mẫu `classicmodels` dùng để thực hành SQL và index tại [CodeGym](https://codegym.vn).
+Bài tập thực hành về cách định nghĩa, gọi và quản lý các thủ tục lưu trữ (Stored Procedure) trong MySQL sử dụng cơ sở dữ liệu mẫu `classicmodels`.
 
-## Chạy file SQL
+## Nội dung thực hành
 
-### MySQL Workbench
+File `queries.sql` thực hiện các bước theo đúng tiến trình bài học:
 
-1. Mở `index.sql`.
-2. Kết nối tới MySQL Server.
-3. Chọn chạy toàn bộ script bằng `Ctrl + Shift + Enter`.
+1. **Tạo Stored Procedure đầu tiên (`findAllCustomers`)**: Tìm hiểu từ khóa `DELIMITER`, `BEGIN`, `END` để gom cụm các khai báo SQL nhằm tăng hiệu suất và giảm lưu lượng mạng.
+2. **Gọi Stored Procedure**: Sử dụng cú pháp `CALL` để triệu gọi thủ tục.
+3. **Sửa đổi Stored Procedure**: Thực hiện quy trình chuẩn trong MySQL bằng cách sử dụng `DROP PROCEDURE IF EXISTS` kết hợp tạo mới nhằm thay đổi logic lọc dữ liệu (lọc theo `customerNumber = 175`).
+4. **Mở rộng (Tham số IN)**: Tạo thủ tục `getCustomersByCity` nhận vào tham số tên thành phố để tăng tính linh hoạt khi truy vấn.
 
-### PowerShell
+## Cách chạy bài thực hành
 
-PowerShell không hỗ trợ toán tử `<` trực tiếp. Dùng `cmd` bên trong PowerShell:
-
-```powershell
-cmd /c 'mysql -u root -p < "D:\jwbd-2023-using-index\index.sql"'
-```
-
-Nhập mật khẩu MySQL khi được yêu cầu.
-
-> Lưu ý: script sẽ xóa và tạo lại các bảng trong database `classicmodels`.
-
-## Chạy bài thực hành index
-
-Sau khi import dữ liệu, mở và chạy toàn bộ file `queries.sql`. File thực hiện theo thứ tự:
-
-1. Chạy truy vấn tìm khách hàng `Land of Toys Inc.`.
-2. Dùng `EXPLAIN` trước khi tạo chỉ mục.
-3. Tạo chỉ mục đơn `idx_customerName` cho `customerName`.
-4. Dùng `EXPLAIN` lại để so sánh kế hoạch thực thi.
-5. Tạo chỉ mục kép `idx_full_name` cho `contactFirstName` và `contactLastName`.
-6. Dùng `EXPLAIN` với điều kiện tìm họ tên và điều kiện `OR`.
-7. Xóa các chỉ mục đã tạo.
-
-Có thể chạy bằng MySQL Workbench hoặc bằng PowerShell:
-
-```powershell
-cmd /c 'mysql -u root -p < "D:\jwbd-2023-using-index\queries.sql"'
-```
-
-File truy vấn tương ứng:
-
-```sql
-USE classicmodels;
-
-SELECT *
-FROM customers
-WHERE customerName = 'Land of Toys Inc.';
-```
+Mở file `queries.sql` bằng MySQL Workbench, kết nối tới Server chứa database `classicmodels` và nhấn `Ctrl + Shift + Enter` để thực thi toàn bộ script.
