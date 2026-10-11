@@ -1,48 +1,76 @@
+-- =========================================================================
+-- BÀI THỰC HÀNH: THAM SỐ TRONG STORED PROCEDURE (IN, OUT, INOUT)
+-- CƠ SỞ DỮ LIỆU: classicmodels
+-- =========================================================================
+
 USE classicmodels;
 
--- 1. Tạo Stored Procedure lấy toàn bộ khách hàng
+-- -------------------------------------------------------------------------
+-- PHẦN 1: THAM SỐ LOẠI IN (Tham số truyền vào để lọc dữ liệu)
+-- Thủ tục lấy thông tin khách hàng theo mã số (customerNumber)
+-- -------------------------------------------------------------------------
 DELIMITER //
 
-DROP PROCEDURE IF EXISTS `findAllCustomers` //
+DROP PROCEDURE IF EXISTS `getCusById` //
 
-CREATE PROCEDURE findAllCustomers()
+CREATE PROCEDURE getCusById(IN cusNum INT)
 BEGIN
-    SELECT * FROM customers;
+    SELECT * FROM customers WHERE customerNumber = cusNum;
 END //
 
 DELIMITER ;
 
--- Gọi thử nghiệm thủ tục đầu tiên
-CALL findAllCustomers();
+-- Gọi thử nghiệm thủ tục loại IN:
+-- CALL getCusById(175);
 
 
--- 2. Sửa Stored Procedure (Xóa và tạo lại để lọc theo mã khách hàng 175)
+-- -------------------------------------------------------------------------
+-- PHẦN 2: THAM SỐ LOẠI OUT (Tham số dùng để trả kết quả ra ngoài)
+-- Thủ tục đếm số lượng khách hàng theo thành phố và gán vào biến 'total'
+-- -------------------------------------------------------------------------
 DELIMITER //
 
-DROP PROCEDURE IF EXISTS `findAllCustomers` //
+DROP PROCEDURE IF EXISTS `GetCustomersCountByCity` //
 
-CREATE PROCEDURE findAllCustomers()
+CREATE PROCEDURE GetCustomersCountByCity(
+    IN  in_city VARCHAR(50),
+    OUT total INT
+)
 BEGIN
-    SELECT * FROM customers WHERE customerNumber = 175;
+    SELECT COUNT(customerNumber)
+    INTO total
+    FROM customers
+    WHERE city = in_city;
 END //
 
 DELIMITER ;
 
--- Gọi thử nghiệm thủ tục sau khi sửa
-CALL findAllCustomers();
+-- Gọi thử nghiệm thủ tục loại OUT (sử dụng biến có dấu @):
+-- CALL GetCustomersCountByCity('Lyon', @total);
+-- SELECT @total;
 
 
--- 3. Tạo Stored Procedure có tham số đầu vào (IN) để lọc theo thành phố
+-- -------------------------------------------------------------------------
+-- PHẦN 3: THAM SỐ LOẠI INOUT (Kết hợp giữa nhận giá trị và trả giá trị)
+-- Thủ tục cộng thêm một giá trị (inc) vào một biến đếm (counter) có sẵn
+-- -------------------------------------------------------------------------
 DELIMITER //
 
-DROP PROCEDURE IF EXISTS `getCustomersByCity` //
+DROP PROCEDURE IF EXISTS `SetCounter` //
 
-CREATE PROCEDURE getCustomersByCity(IN cityName VARCHAR(50))
+CREATE PROCEDURE SetCounter(
+    INOUT counter INT,
+    IN inc INT
+)
 BEGIN
-    SELECT * FROM customers WHERE city = cityName;
+    SET counter = counter + inc;
 END //
 
 DELIMITER ;
 
--- Gọi thử nghiệm thủ tục có tham số
-CALL getCustomersByCity('NYC');
+-- Gọi thử nghiệm thủ tục loại INOUT theo các bước tăng dần:
+-- SET @counter = 1;
+-- CALL SetCounter(@counter, 1); -- Kết quả mong đợi: 2
+-- CALL SetCounter(@counter, 1); -- Kết quả mong đợi: 3
+-- CALL SetCounter(@counter, 5); -- Kết quả mong đợi: 8
+-- SELECT @counter;              -- Hiển thị giá trị cuối cùng: 8
