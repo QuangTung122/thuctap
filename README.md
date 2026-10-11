@@ -1,25 +1,22 @@
+# Thực hành MySQL Trigger - Quản lý Nhân viên
 
-# Thực hành MySQL View (Khung nhìn) - Classicmodels
-
-Bài tập thực hành về cách khởi tạo, cập nhật cấu trúc và xóa Khung nhìn (View) trong MySQL sử dụng cơ sở dữ liệu mẫu `classicmodels`.
+Bài tập thực hành về cách khởi tạo và vận hành cơ chế Kích hoạt tự động (Trigger) trong MySQL nhằm kiểm soát, chuẩn hóa dữ liệu trước khi chèn vào bảng.
 
 ## Mục tiêu bài học
 
-- Hiểu cách tạo một bảng ảo (View) để che giấu các dữ liệu nhạy cảm hoặc đơn giản hóa các câu lệnh truy vấn phức tạp.
-- Thành thạo cú pháp chỉnh sửa cấu trúc của View mà không làm gián đoạn dịch vụ hệ thống.
-- Biết cách dọn dẹp và giải phóng tài nguyên khi không còn nhu cầu sử dụng View.
+- Hiểu rõ khái niệm và cú pháp xây dựng một Trigger (`BEFORE INSERT`).
+- Biết cách sử dụng từ khóa `NEW` để can thiệp và thay đổi giá trị của dòng dữ liệu sắp được thêm mới.
+- Ứng dụng cấu trúc điều kiện `IF-ELSEIF-ELSE` để tự động hóa quy trình nghiệp vụ (Business Rule) ngay trong tầng cơ sở dữ liệu.
 
-## Nội dung thực hành trong file `queries.sql`
+## Tiến trình thực thi trong file `queries.sql`
 
-Tiến trình mã nguồn thực thi tuần tự theo các bước:
-
-1. **Tạo View đầu tiên (`customer_views`)**: Trích xuất các thông tin cơ bản gồm mã khách hàng, tên khách hàng và số điện thoại từ bảng gốc `customers`.
-2. **Kiểm tra dữ liệu**: Thực hiện lệnh `SELECT` trực tiếp trên View để kiểm tra kết quả hiển thị.
-3. **Cập nhật View (`CREATE OR REPLACE VIEW`)**: Mở rộng cấu trúc View bằng cách thêm thông tin họ tên người liên hệ (`contactFirstName`, `contactLastName`) đồng thời áp dụng bộ lọc điều kiện chỉ lấy các khách hàng ở thành phố `Nantes`.
-4. **Xóa View (`DROP VIEW IF EXISTS`)**: Thực hiện xóa bỏ khung nhìn một cách an toàn để dọn dẹp cơ sở dữ liệu.
+1. **Khởi tạo môi trường**: Tạo mới database `company` và cấu trúc bảng mẫu `employees`.
+2. **Xây dựng Trigger (`update_department`)**: Tạo bộ lắng nghe sự kiện `BEFORE INSERT` trên bảng nhân viên. Trigger tự động kiểm tra mức lương (`salary`) để phân bổ chính xác vào các phòng ban `Management`, `Sales`, hoặc `Support`.
+3. **Chèn dữ liệu thử nghiệm**: Thực hiện lệnh `INSERT` 3 nhân viên với các mức lương khác nhau (3500, 2000, 6000) và truyền giá trị phòng ban tạm thời là `'A'`.
+4. **Kiểm chứng kết quả**: Sử dụng lệnh `SELECT` để xác nhận Trigger đã đè dữ liệu gốc thành các phòng ban chuẩn xác dựa trên cấu hình điều kiện.
 
 ## Hướng dẫn chạy bài thực hành
 
-1. Khởi động công cụ **MySQL Workbench** (hoặc Command Line).
-2. Mở file `queries.sql` chứa mã nguồn thực hành.
-3. Nhấn tổ hợp phím `Ctrl + Shift + Enter` để thực thi toàn bộ kịch bản script từ trên xuống dưới.
+1. Khởi động công cụ điều khiển cơ sở dữ liệu (**MySQL Workbench** hoặc dòng lệnh).
+2. Mở tệp tin `queries.sql` vừa cập nhật.
+3. Chạy toàn bộ mã lệnh bằng tổ hợp phím `Ctrl + Shift + Enter`.

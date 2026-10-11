@@ -1,39 +1,46 @@
 -- =========================================================================
--- BÀI THỰC HÀNH: KHỞI TẠO, CẬP NHẬT VÀ XÓA VIEW (KHUNG NHÌN)
--- CƠ SỞ DỮ LIỆU: classicmodels
+-- BÀI THỰC HÀNH: TẠO VÀ SỬ DỤNG TRIGGER TRONG MYSQL
+-- CƠ SỞ DỮ LIỆU: company
 -- =========================================================================
 
-USE classicmodels;
+-- Bước 1: Khởi tạo Cơ sở dữ liệu và Bảng nhân viên
+DROP DATABASE IF EXISTS company;
+CREATE DATABASE company;
+USE company;
 
--- -------------------------------------------------------------------------
--- BƯỚC 1: TẠO VIEW ĐẦU TIÊN (customer_views)
--- Trích xuất các cột: customerNumber, customerName, phone từ bảng customers
--- -------------------------------------------------------------------------
--- Xóa view cũ nếu đã tồn tại để tránh xung đột hệ thống
-DROP VIEW IF EXISTS customer_views;
+CREATE TABLE employees (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    department VARCHAR(50) NOT NULL,
+    salary DECIMAL(10,2) NOT NULL
+);
 
-CREATE VIEW customer_views AS
-SELECT customerNumber, customerName, phone
-FROM customers;
+-- Bước 2: Khởi tạo Trigger tự động phân loại Phòng ban theo Mức lương
+DELIMITER //
 
--- Kiểm tra: Truy vấn dữ liệu trực tiếp từ View vừa tạo
-SELECT * FROM customer_views;
+DROP TRIGGER IF EXISTS update_department //
 
+CREATE TRIGGER update_department
+BEFORE INSERT ON employees
+FOR EACH ROW
+BEGIN
+    IF NEW.salary >= 5000 THEN
+        SET NEW.department = 'Management';
+    ELSEIF NEW.salary >= 3000 THEN
+        SET NEW.department = 'Sales';
+    ELSE
+        SET NEW.department = 'Support';
+    END IF;
+END //
 
--- -------------------------------------------------------------------------
--- BƯỚC 2: CẬP NHẬT VIEW (Sử dụng cấu trúc CREATE OR REPLACE VIEW)
--- Thay đổi cấu trúc: Thêm họ tên liên hệ và lọc khách hàng ở thành phố 'Nantes'
--- -------------------------------------------------------------------------
-CREATE OR REPLACE VIEW customer_views AS
-SELECT customerNumber, customerName, contactFirstName, contactLastName, phone
-FROM customers
-WHERE city = 'Nantes';
+DELIMITER ;
 
--- Kiểm tra: Truy vấn lại dữ liệu để xác nhận cấu trúc và bộ lọc mới đã áp dụng
-SELECT * FROM customer_views;
+-- Bước 3: Thử nghiệm cơ chế hoạt động của Trigger (Chèn dữ liệu mới)
+-- Lưu ý: Giá trị phòng ban nhập tạm thời là 'A' sẽ bị Trigger ghi đè tự động
+INSERT INTO employees (name, department, salary)
+VALUES ('John Doe', 'A', 3500.00),
+       ('Jane Smith', 'A', 2000.00),
+       ('David Johnson', 'A', 6000.00);
 
-
--- -------------------------------------------------------------------------
--- BƯỚC 3: XÓA VIEW (Giải phóng tài nguyên hệ thống)
--- -------------------------------------------------------------------------
-DROP VIEW IF EXISTS customer_views;
+-- Bước 4: Kiểm tra kết quả sau khi Trigger xử lý dữ liệu
+SELECT * FROM employees;
