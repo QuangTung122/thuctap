@@ -1,22 +1,24 @@
-# Thực hành MySQL Trigger - Quản lý Nhân viên
+# Thực hành MySQL Trigger - Classicmodels
 
-Bài tập thực hành về cách khởi tạo và vận hành cơ chế Kích hoạt tự động (Trigger) trong MySQL nhằm kiểm soát, chuẩn hóa dữ liệu trước khi chèn vào bảng.
+Bài tập thực hành về cách tạo, kiểm thử và sửa đổi Trigger trong MySQL trên cơ sở dữ liệu mẫu `classicmodels`.
 
 ## Mục tiêu bài học
 
-- Hiểu rõ khái niệm và cú pháp xây dựng một Trigger (`BEFORE INSERT`).
-- Biết cách sử dụng từ khóa `NEW` để can thiệp và thay đổi giá trị của dòng dữ liệu sắp được thêm mới.
-- Ứng dụng cấu trúc điều kiện `IF-ELSEIF-ELSE` để tự động hóa quy trình nghiệp vụ (Business Rule) ngay trong tầng cơ sở dữ liệu.
+- Hiểu cú pháp xây dựng Trigger với các sự kiện `BEFORE INSERT` và `AFTER INSERT`.
+- Biết sử dụng `NEW` để kiểm tra dữ liệu trước khi thêm bản ghi.
+- Biết ghi nhận sự kiện phát sinh vào bảng log bằng Trigger.
+- Biết sửa Trigger trong MySQL bằng cách xóa và tạo lại Trigger.
 
 ## Tiến trình thực thi trong file `queries.sql`
 
-1. **Khởi tạo môi trường**: Tạo mới database `company` và cấu trúc bảng mẫu `employees`.
-2. **Xây dựng Trigger (`update_department`)**: Tạo bộ lắng nghe sự kiện `BEFORE INSERT` trên bảng nhân viên. Trigger tự động kiểm tra mức lương (`salary`) để phân bổ chính xác vào các phòng ban `Management`, `Sales`, hoặc `Support`.
-3. **Chèn dữ liệu thử nghiệm**: Thực hiện lệnh `INSERT` 3 nhân viên với các mức lương khác nhau (3500, 2000, 6000) và truyền giá trị phòng ban tạm thời là `'A'`.
-4. **Kiểm chứng kết quả**: Sử dụng lệnh `SELECT` để xác nhận Trigger đã đè dữ liệu gốc thành các phòng ban chuẩn xác dựa trên cấu hình điều kiện.
+1. **Khởi tạo môi trường**: Chạy `index.sql` trước để tạo và nạp dữ liệu cho database `classicmodels`.
+2. **Tạo `validate_customer_credit_limit`**: Trigger `BEFORE INSERT` đặt hạn mức mặc định là `0.00` khi giá trị bị bỏ trống và từ chối hạn mức âm.
+3. **Tạo `log_new_order`**: Trigger `AFTER INSERT` trên bảng `orders` ghi số đơn hàng và khách hàng vào bảng `order_audit`.
+4. **Gọi kiểm thử Trigger**: Chèn dữ liệu mẫu rồi dùng `SELECT` để kiểm tra kết quả Trigger.
+5. **Sửa Trigger**: Xóa và tạo lại `log_new_order` để thay đổi giá trị `action_name` từ `INSERT` thành `INSERTED_ORDER`, sau đó kiểm tra lại.
 
 ## Hướng dẫn chạy bài thực hành
 
 1. Khởi động công cụ điều khiển cơ sở dữ liệu (**MySQL Workbench** hoặc dòng lệnh).
-2. Mở tệp tin `queries.sql` vừa cập nhật.
+2. Chạy `index.sql`, sau đó mở tệp tin `queries.sql`.
 3. Chạy toàn bộ mã lệnh bằng tổ hợp phím `Ctrl + Shift + Enter`.
