@@ -30,6 +30,7 @@
                     <ul class="navbar-nav ml-auto align-items-lg-center">
                         <li class="nav-item"><a class="nav-link" href="#benefits">Lợi ích</a></li>
                         <li class="nav-item"><a class="nav-link" href="#how-it-works">Cách hoạt động</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#components">Thành phần</a></li>
                         <li class="nav-item ml-lg-3"><a class="btn btn-primary btn-rounded px-4" href="register.html">Bắt đầu miễn phí</a></li>
                     </ul>
                 </div>
@@ -86,10 +87,53 @@
             <div class="container py-5"><div class="row align-items-center"><div class="col-lg-5 mb-5 mb-lg-0"><span class="section-kicker">02 / CÁCH HOẠT ĐỘNG</span><h2 class="font-weight-bold mt-3 mb-3">Bắt đầu nhỏ,<br>đi xa hơn.</h2><p class="text-muted mb-4">Ba bước đủ rõ để bắt đầu ngay, đủ linh hoạt để đồng hành lâu dài.</p><a class="btn btn-outline-primary btn-rounded" href="register.html">Thử Lumen miễn phí</a></div><div class="col-lg-6 ml-auto"><div class="step d-flex mb-4"><div class="step-number">01</div><div><h5 class="font-weight-bold mb-2">Chọn điều bạn muốn nuôi dưỡng</h5><p class="text-muted mb-0">Một mục tiêu cá nhân, một dự án hoặc chỉ là một khoảng nghỉ tử tế.</p></div></div><div class="step d-flex mb-4"><div class="step-number">02</div><div><h5 class="font-weight-bold mb-2">Tạo nhịp phù hợp với bạn</h5><p class="text-muted mb-0">Đặt những lần nhắc nhẹ nhàng, không biến ngày của bạn thành danh sách áp lực.</p></div></div><div class="step d-flex"><div class="step-number">03</div><div><h5 class="font-weight-bold mb-2">Nhìn lại và điều chỉnh</h5><p class="text-muted mb-0">Mỗi tuần, Lumen giúp bạn nhận ra điều gì đang hiệu quả.</p></div></div></div></div></div>
         </section>
 
-        <section class="cta-section py-5"><div class="container py-5"><div class="cta-panel text-center text-white p-4 p-md-5"><span class="section-kicker text-white-50">03 / YOUR NEXT SMALL STEP</span><h2 class="font-weight-bold my-3">Một ngày tốt hơn<br>bắt đầu từ đây.</h2><p class="mb-4 text-white-50">Tạo không gian cho những điều thật sự quan trọng.</p><a class="btn btn-light btn-rounded px-4" href="register.html">Tạo tài khoản miễn phí <i class="fas fa-arrow-right ml-2"></i></a></div></div></section>
+        <section class="component-section py-5" id="components">
+            <div class="container py-5">
+                <div class="row mb-5">
+                    <div class="col-lg-7">
+                        <span class="section-kicker">03 / THÀNH PHẦN CƠ BẢN</span>
+                        <h2 class="font-weight-bold mt-3 mb-3">Đủ rõ ràng để<br><span class="text-primary">dùng ngay.</span></h2>
+                    </div>
+                    <div class="col-lg-4 ml-auto align-self-end"><p class="text-muted mb-0">Các thành phần thường gặp trong một giao diện cơ bản: thông báo, nút, biểu mẫu, bảng thông tin và câu hỏi thường gặp.</p></div>
+                </div>
+
+                <div class="alert alert-primary d-flex align-items-center" role="alert"><i class="fas fa-info-circle mr-3"></i><span><strong>Lumen đang hoạt động tốt.</strong> Bạn có thể bắt đầu với tài khoản miễn phí ngay hôm nay.</span></div>
+
+                <div class="row mt-4">
+                    <div class="col-lg-5 mb-4">
+                        <div class="card component-card h-100 border-0">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-center mb-4"><h5 class="font-weight-bold mb-0">Tạo mục tiêu</h5><span class="badge badge-primary badge-pill">Mới</span></div>
+                                <form id="goalForm">
+                                    <div class="md-form mt-0"><input type="text" id="goalName" class="form-control" placeholder="Ví dụ: Đọc sách mỗi ngày"><label for="goalName">Tên mục tiêu</label></div>
+                                    <div class="form-row"><div class="col"><label class="small text-muted" for="goalCategory">Danh mục</label><select id="goalCategory" class="browser-default custom-select"><option>Sức khỏe</option><option>Học tập</option><option>Công việc</option></select></div><div class="col"><label class="small text-muted" for="goalDays">Số ngày</label><input id="goalDays" class="form-control" type="number" value="7" min="1"></div></div>
+                                    <button class="btn btn-primary btn-rounded btn-sm mt-4" type="submit">Lưu mục tiêu <i class="fas fa-check ml-1"></i></button>
+                                    <small class="d-block text-success mt-3" id="goalMessage" aria-live="polite"></small>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-7 mb-4">
+                        <div class="card component-card h-100 border-0">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-center mb-3"><h5 class="font-weight-bold mb-0">Tổng quan tuần</h5><span class="small text-muted">13 - 19/10</span></div>
+                                <div class="table-responsive"><table class="table table-hover mb-0"><thead><tr><th scope="col">Mục tiêu</th><th scope="col">Tiến độ</th><th scope="col">Trạng thái</th></tr></thead><tbody><tr><td>Đọc sách</td><td><div class="progress"><div class="progress-bar bg-primary" style="width: 80%"></div></div></td><td><span class="badge badge-success">Tốt</span></td></tr><tr><td>Đi bộ</td><td><div class="progress"><div class="progress-bar bg-info" style="width: 55%"></div></div></td><td><span class="badge badge-warning">Đang làm</span></td></tr><tr><td>Thiền</td><td><div class="progress"><div class="progress-bar bg-secondary" style="width: 25%"></div></div></td><td><span class="badge badge-light">Mới</span></td></tr></tbody></table></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-2">
+                    <div class="col-lg-6 mb-4 mb-lg-0"><div class="card component-card border-0"><div class="card-body p-4"><h5 class="font-weight-bold mb-3">Câu hỏi thường gặp</h5><div id="faqAccordion"><div class="border-bottom py-3"><button class="btn btn-link p-0 text-dark font-weight-bold text-left w-100" data-toggle="collapse" data-target="#faqOne" aria-expanded="true" aria-controls="faqOne">Lumen có miễn phí không? <i class="fas fa-chevron-down float-right text-primary"></i></button><div id="faqOne" class="collapse show mt-2" data-parent="#faqAccordion"><p class="small text-muted mb-0">Có. Bạn có thể bắt đầu miễn phí và nâng cấp khi cần thêm tính năng.</p></div></div><div class="py-3"><button class="btn btn-link p-0 text-dark font-weight-bold text-left w-100" data-toggle="collapse" data-target="#faqTwo" aria-expanded="false" aria-controls="faqTwo">Có thể dùng trên điện thoại không? <i class="fas fa-chevron-down float-right text-primary"></i></button><div id="faqTwo" class="collapse mt-2" data-parent="#faqAccordion"><p class="small text-muted mb-0">Có, giao diện được tối ưu cho cả máy tính, tablet và điện thoại.</p></div></div></div></div></div></div>
+                    <div class="col-lg-6"><div class="card component-card border-0 h-100"><div class="card-body p-4 d-flex flex-column justify-content-between"><div><h5 class="font-weight-bold mb-3">Sẵn sàng bắt đầu?</h5><p class="text-muted">Tạo tài khoản để lưu mục tiêu và theo dõi tiến độ của bạn.</p></div><a class="btn btn-primary btn-rounded align-self-start" href="register.html">Đăng ký ngay <i class="fas fa-arrow-right ml-2"></i></a></div></div></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section py-5"><div class="container py-5"><div class="cta-panel text-center text-white p-4 p-md-5"><span class="section-kicker text-white-50">04 / YOUR NEXT SMALL STEP</span><h2 class="font-weight-bold my-3">Một ngày tốt hơn<br>bắt đầu từ đây.</h2><p class="mb-4 text-white-50">Tạo không gian cho những điều thật sự quan trọng.</p><a class="btn btn-light btn-rounded px-4" href="register.html">Tạo tài khoản miễn phí <i class="fas fa-arrow-right ml-2"></i></a></div></div></section>
     </main>
 
-    <footer class="page-footer font-small pt-5 pb-4"><div class="container"><div class="row"><div class="col-md-5 mb-4"><a class="navbar-brand font-weight-bold text-dark d-flex align-items-center mb-3" href="#top"><span class="brand-mark mr-2"></span>Lumen</a><p class="text-muted small">Một nhịp sống sáng rõ hơn, từng bước nhỏ một.</p></div><div class="col-md-3 ml-auto mb-4"><h6 class="font-weight-bold">Khám phá</h6><a class="d-block text-muted small mb-2" href="#benefits">Lợi ích</a><a class="d-block text-muted small mb-2" href="#how-it-works">Cách hoạt động</a></div><div class="col-md-3 mb-4"><h6 class="font-weight-bold">Bắt đầu</h6><a class="d-block text-muted small mb-2" href="register.html">Đăng ký tài khoản</a><a class="d-block text-muted small mb-2" href="#top">Trở về đầu trang</a></div></div><div class="footer-bottom pt-4 mt-3 border-top small text-muted">© 2026 Lumen <span class="float-right">Made for better days.</span></div></div></footer>
+    <footer class="page-footer font-small pt-5 pb-4"><div class="container"><div class="row"><div class="col-md-5 mb-4"><a class="navbar-brand font-weight-bold text-dark d-flex align-items-center mb-3" href="#top"><span class="brand-mark mr-2"></span>Lumen</a><p class="text-muted small">Một nhịp sống sáng rõ hơn, từng bước nhỏ một.</p></div><div class="col-md-3 ml-auto mb-4"><h6 class="font-weight-bold">Khám phá</h6><a class="d-block text-muted small mb-2" href="#benefits">Lợi ích</a><a class="d-block text-muted small mb-2" href="#how-it-works">Cách hoạt động</a><a class="d-block text-muted small mb-2" href="#components">Thành phần</a></div><div class="col-md-3 mb-4"><h6 class="font-weight-bold">Bắt đầu</h6><a class="d-block text-muted small mb-2" href="register.html">Đăng ký tài khoản</a><a class="d-block text-muted small mb-2" href="#top">Trở về đầu trang</a></div></div><div class="footer-bottom pt-4 mt-3 border-top small text-muted">© 2026 Lumen <span class="float-right">Made for better days.</span></div></div></footer>
 
     <!-- JQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

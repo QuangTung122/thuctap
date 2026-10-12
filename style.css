@@ -34,6 +34,14 @@ body { color: var(--lumen-ink); background: var(--lumen-paper); }
 .icon-box { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 12px; }
 .bg-primary-light { background: #e7edff; }.bg-green-light { background: #dff5e9; }.bg-yellow-light { background: #fff0cc; }
 .process-section { background: #f1f5ff; }
+.component-section { background: #fff; }
+.component-card { border-radius: 12px; box-shadow: 0 12px 30px rgba(23,37,54,.06); }
+.component-card .progress { height: 6px; min-width: 90px; margin: 7px 0 0; background: #e8edf5; }
+.component-card .table td, .component-card .table th { vertical-align: middle; white-space: nowrap; }
+.component-card .table th { color: #66758b; border-top: 0; font-size: .72rem; text-transform: uppercase; letter-spacing: .05em; }
+.component-card .table td { border-color: #edf0f5; font-size: .86rem; }
+.component-card .md-form input { margin-bottom: 0; }
+.component-section .alert { border-radius: 9px; }
 .step-number { flex: 0 0 48px; margin-right: 20px; color: var(--lumen-blue); font: 700 12px monospace; }
 .step + .step { padding-top: 24px; border-top: 1px solid #d8e0f2; }
 .cta-panel { background: var(--lumen-ink); border-radius: 16px; box-shadow: 0 24px 50px rgba(23,37,54,.16); }

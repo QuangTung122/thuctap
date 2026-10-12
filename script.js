@@ -16,4 +16,14 @@
             }
         });
     });
+
+    const goalForm = document.querySelector('#goalForm');
+    const goalMessage = document.querySelector('#goalMessage');
+    if (goalForm) {
+        goalForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const goalName = document.querySelector('#goalName').value.trim();
+            goalMessage.textContent = goalName ? `Đã lưu mục tiêu “${goalName}”.` : 'Hãy nhập tên mục tiêu trước khi lưu.';
+        });
+    }
 }());
