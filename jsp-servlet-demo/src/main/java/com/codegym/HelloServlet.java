@@ -8,24 +8,35 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-// Khai báo định tuyến URL: Khi gõ "/hello", trình duyệt sẽ kích hoạt Servlet này
-@WebServlet(name = "HelloServlet", urlPatterns = {"/hello"})
-public class HelloServlet extends HttpServlet {
+// Định tuyến URL nhận request từ thuộc tính action="login" của Form
+@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
+public class LoginServlet extends HttpServlet {
+
+    // Sử dụng doPost để bắt dữ liệu từ form có method="POST"
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         
-        // Cấu hình phản hồi hiển thị HTML và hỗ trợ hiển thị Tiếng Việt có dấu
         response.setContentType("text/html;charset=UTF-8");
+        
+        // 1. Lấy dữ liệu người dùng nhập từ Form (thông qua thuộc tính 'name' của thẻ input)
+        String user = request.getParameter("username");
+        String pass = request.getParameter("password");
         
         try (PrintWriter out = response.getWriter()) {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
-            out.println("<head><title>Hello Servlet</title></head>");
+            out.println("<head><title>Login Result</title></head>");
             out.println("<body style='font-family: Arial, sans-serif; text-align: center; margin-top: 100px;'>");
-            out.println("<h1 style='color: #1b2a7a;'>Chào mừng bạn đến với Servlet đầu tiên!</h1>");
-            out.println("<p style='color: #f15a24; font-size: 18px;'>Ứng dụng đang chạy mượt mà trên Antigravity IDE 2026</p>");
-            out.println("<a href='index.jsp'>Quay lại trang chủ JSP</a>");
+            
+            // 2. Kiểm tra điều kiện logic (Hardcode admin/admin theo yêu cầu)
+            if ("admin".equals(user) && "admin".equals(pass)) {
+                out.println("<h1 style='color: green;'>Welcome admin to website</h1>");
+            } else {
+                out.println("<h1 style='color: red;'>Login Error</h1>");
+            }
+            
+            out.println("<br><a href='index.jsp'>Go back</a>");
             out.println("</body>");
             out.println("</html>");
         }

@@ -3,10 +3,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.codegym</groupId>
-    <artifactId>jsp-servlet-demo</artifactId>
+    <artifactId>jsp-servlet-login</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>jsp-servlet-demo Maven Webapp</name>
+    <name>jsp-servlet-login Maven Webapp</name>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -31,7 +31,7 @@
     </dependencies>
 
     <build>
-        <finalName>jsp-servlet-demo</finalName>
+        <finalName>jsp-servlet-login</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
