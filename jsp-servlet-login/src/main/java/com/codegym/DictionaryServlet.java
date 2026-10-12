@@ -1,61 +1,60 @@
-package com.codegym;
-
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
-// Khai báo định tuyến URL: Khi gõ "/translate", trình duyệt sẽ kích hoạt Servlet này
-@WebServlet(name = "DictionaryServlet", urlPatterns = {"/translate"})
-public class DictionaryServlet extends HttpServlet {
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
-            throws ServletException, IOException {
-        
-        // Cấu hình phản hồi hiển thị HTML và hỗ trợ hiển thị Tiếng Việt
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
-        
-        // Khởi tạo danh sách từ vựng (Từ điển)
-        Map<String, String> dictionary = new HashMap<>();
-        dictionary.put("hello", "Xin chào");
-        dictionary.put("how", "Thế nào");
-        dictionary.put("book", "Quyển sách");
-        dictionary.put("computer", "Máy tính");
-        dictionary.put("student", "Sinh viên");
-
-        // Nhận tham số từkhóa từ form
-        String searchWord = request.getParameter("word");
-
-        try (PrintWriter out = response.getWriter()) {
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head><title>Kết quả tra cứu</title></head>");
-            out.println("<body style='font-family: Arial, sans-serif; text-align: center; margin-top: 100px;'>");
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.Map"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Kết quả tra cứu</title>
+        <style>
+            body { font-family: 'Arial', sans-serif; display: flex; justify-content: center; margin-top: 100px; background-color: #f8fafc; }
+            .result-container { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; width: 400px; }
+            .back-btn { text-decoration: none; padding: 10px 20px; background-color: #1b2a7a; color: white; border-radius: 4px; display: inline-block; margin-top: 20px;}
+        </style>
+    </head>
+    <body>
+        <div class="result-container">
+            <h2 style="color: #1b2a7a;">KẾT QUẢ TRA CỨU</h2>
             
-            if (searchWord != null && !searchWord.trim().isEmpty()) {
-                // Chuyển từ khóa về chữ thường để dễ tìm kiếm
-                String result = dictionary.get(searchWord.trim().toLowerCase());
+            <%-- Mở thẻ Scriptlet để khởi tạo từ điển và xử lý logic --%>
+            <%
+                request.setCharacterEncoding("UTF-8");
+                String searchWord = request.getParameter("search");
                 
-                if (result != null) {
-                    out.println("<h2 style='color: #1b2a7a;'>Từ khóa: " + searchWord + "</h2>");
-                    out.println("<h3 style='color: #27ae60;'>Nghĩa tiếng Việt: " + result + "</h3>");
-                } else {
-                    out.println("<h2 style='color: red;'>Không tìm thấy từ: " + searchWord + "</h2>");
+                // Khởi tạo Map lưu trữ từ vựng làm Database giả lập
+                Map<String, String> dic = new HashMap<>();
+                dic.put("hello", "Xin chào");
+                dic.put("how", "Thế nào");
+                dic.put("book", "Quyển sách");
+                dic.put("computer", "Máy tính");
+                dic.put("student", "Sinh viên");
+                
+                String result = null;
+                if (searchWord != null && !searchWord.trim().isEmpty()) {
+                    result = dic.get(searchWord.trim().toLowerCase());
                 }
-            } else {
-                out.println("<h2 style='color: orange;'>Vui lòng nhập từ khóa hợp lệ!</h2>");
-            }
+            %>
             
-            out.println("<br><a href='index.jsp' style='text-decoration: none; padding: 10px 20px; background-color: #1b2a7a; color: white; border-radius: 4px;'>Quay lại</a>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-}
+            <%-- Hiển thị kết quả bằng thẻ Expression hoặc đưa ra thông báo không tìm thấy --%>
+            <%
+                if (result != null) {
+            %>
+                <p style="font-size: 18px; color: #555;">Từ cần tra: <b style="color: #1b2a7a;"><%= searchWord %></b></p>
+                <div style="background-color: #e8f5e9; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                    <h3 style="color: #27ae60; font-size: 24px; margin: 0;">Nghĩa là: <%= result %></h3>
+                </div>
+            <%
+                } else {
+            %>
+                <div style="background-color: #ffebee; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                    <h3 style="color: #c0392b; margin: 0;">Không tìm thấy!</h3>
+                    <p style="color: #555;">Từ khóa <b style="color: #c0392b;"><%= searchWord %></b> không có trong từ điển.</p>
+                </div>
+            <%
+                }
+            %>
+            
+            <a href="index.jsp" class="back-btn">Quay lại trang chủ</a>
+        </div>
+    </body>
+</html>
